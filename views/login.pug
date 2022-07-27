@@ -1,0 +1,17 @@
+extends layouts/login-layout.pug
+
+block content
+    .loginContainer
+        if  errorMessage
+            .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+                strong Login Failed!
+                    p #{errorMessage}
+                button.close(type='button', data-dismiss='alert', aria-label='Close')
+                    span(aria-hidden='true') &times;
+        h1 Login
+        form(method="post")
+            input(type="text", name="logUsername", placeholder='Enter your username or email', value=logUsername required="")
+            input(type="password", name="logPassword", placeholder='Enter your password', required="")
+            input(type="submit", value="Login")
+        p Need an account? 
+            a(href="/register")  Register here. 
