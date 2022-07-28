@@ -194,5 +194,20 @@ button{
 }
 
 .postFooter .postButtonContainer button{
-    padding: 0 5px;
+    padding: 2px 5px;
+}
+
+.header a:hover{
+    text-decoration: underline;
+}
+
+.header a,
+.header span{
+    padding-right: 5px;
+}
+
+.postButtonContainer button:hover{
+    background-color: #d4edff;
+    color: var(--blue);
+    border-radius: 50%;
 }
