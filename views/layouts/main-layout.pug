@@ -10,7 +10,10 @@ html(lang="en")
         link(rel="stylesheet", href="/css/main.css")
 
         title #{pageTitle}
-    body 
+    body
+        script. 
+            var userLoggedIn = !{userLoggedInJs}; 
+            //- now authenticated user details are accessible to the client site (pug) also.   
         .wrapper
             .row
                 nav.col-2
@@ -44,6 +47,6 @@ html(lang="en")
         script(src='https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js', integrity='sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+', crossorigin='anonymous')
         
         block scripts
-        
+
         script(src='/js/common.js')
 
