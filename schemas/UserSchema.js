@@ -10,6 +10,7 @@ const UserSchema = new Schema({
     username: { type: String, required: true, trim: true, unique: true},
     email: { type: String, required: true, trim: true, unique: true},
     password: { type: String, required: true },
+    isVerified: {type: Boolean, default:false},
     profilePic: { type: String, default: "/images/profilePic.png"},
 
 },{ timestamps: true });

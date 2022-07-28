@@ -121,3 +121,17 @@ nav a:hover{
 #submitPostButton:disabled{
     background-color: var(--blueLight);
 }
+
+#verified{
+    fill: var(--blue);
+}
+
+.r-og9te1 {
+    max-width: 20px;
+}
+.r-f9ja8p {
+    max-height: 20px;
+}
+.r-1cvl2hr {
+    color: rgb(29, 155, 240);
+}

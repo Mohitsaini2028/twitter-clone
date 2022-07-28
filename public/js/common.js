@@ -19,10 +19,10 @@ $('#submitPostButton').click((event)=>{
     var textbox = $('#PostTextarea');
     
     var data = {
-        // content: textbox.val()
+        content: textbox.val()
     }
 
     $.post("/api/posts", data, (postData, status, xhr)=>{
-        alert(postData);
+        console.log(postData);
     })
 });
