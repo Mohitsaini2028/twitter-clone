@@ -4,6 +4,8 @@
     --lightGrey: rgb(230, 236, 240);
     --spacing: 15px;
     --blueLight: #9BD1F9;
+    --greyText: rgb(101,119,134);
+    --greyButtonText: rgba(0,0,0,0.34);
 }
 
 *{
@@ -77,6 +79,12 @@ nav a:hover{
     border-radius: 50%;
 }
 
+button{
+    background-color: transparent;
+    border: none;
+    color: var(--greyButtonText);
+}
+
 .postFormContainer{
     display: flex;
     padding: var(--spacing);
@@ -134,4 +142,57 @@ nav a:hover{
 }
 .r-1cvl2hr {
     color: rgb(29, 155, 240);
+}
+
+.link{
+    color:var(--blue);
+ }
+ .link:hover{
+    cursor: pointer;
+    text-decoration: underline;
+ }
+
+
+.post{
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing);
+    cursor: pointer;
+    border-bottom: 1px solid var(--lightGrey);
+    flex-shrink: 0;
+}
+
+.mainContentContainer{
+    flex: 1;
+    display: flex;
+}
+
+.postContentContainer{
+    padding-left: var(--spacing);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.username,
+.date{
+    color: var(--greyText);
+}
+
+.displayName{
+    font-weight: bold;
+}
+
+.postFooter{
+    display: flex;
+    align-items: center;
+}
+
+.postFooter .postButtonContainer{
+    flex: 1;      /* takes all the available width */
+    display: flex;
+}
+
+.postFooter .postButtonContainer button{
+    padding: 0 5px;
 }
