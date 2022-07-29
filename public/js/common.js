@@ -43,6 +43,7 @@ $(document).on("click",".likeButton", (event) => {
         url: `/api/posts/${postId}/like`,
         type: "PUT",
         success: (postData)=>{
+
             button.find("span").text(postData.likes.length || ""); // next span element you find
             
             if(postData.likes.includes(userLoggedIn._id)){
@@ -61,26 +62,29 @@ $(document).on("click",".likeButton", (event) => {
 
 
 // Retweet click
-$(document).on("click",".likeButton", (event) => {
+$(document).on("click",".retweetButton", (event) => {
     var button = $(event.target);
     var postId = getPostIdFromElement(button);
 
     if(postId ===  undefined) return;
 
     $.ajax({
-        url: `/api/posts/${postId}/like`,
-        type: "PUT",
+        url: `/api/posts/${postId}/retweet`,
+        type: "POST",
         success: (postData)=>{
-            button.find("span").text(postData.likes.length || ""); // next span element you find
-            
-            if(postData.likes.includes(userLoggedIn._id)){
-                button.addClass("active");
-            }
-            else{
-                button.removeClass("active");
-            }
 
-            return postData;
+            console.log(postData);
+
+            // button.find("span").text(postData.likes.length || ""); // next span element you find
+            
+            // if(postData.likes.includes(userLoggedIn._id)){
+            //     button.addClass("active");
+            // }
+            // else{
+            //     button.removeClass("active");
+            // }
+
+            // return postData;
         }
     })
     console.log(postId);
@@ -100,6 +104,11 @@ function getPostIdFromElement(element){
 }
 
 function createPostHtml(postData){
+
+    if(postData.content === undefined){
+        console.log("postData has no content")
+        return;
+    }
 
     arr = postData.content.split(" ");
 

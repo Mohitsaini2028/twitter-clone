@@ -46,6 +46,8 @@ router.post("/", async (req, res, next)=>{
     
 })
 
+
+// Like
 router.put("/:id/like", async (req, res, next)=>{
 
     var postId = req.params.id;
@@ -83,10 +85,59 @@ router.put("/:id/like", async (req, res, next)=>{
         console.log(error);
         return res.sendStatus(400);
     })
-    
+
     res.status(200).send(post);
 })
 
 
+// Retweet
+router.post("/:id/retweet", async (req, res, next)=>{
 
+    var postId = req.params.id;
+    var userId = req.session.user._id;
+
+    // Try and delete retweet
+    // if retweet doesn't exist it means we never retweeted if exist it will get deleted.
+    var deletedPost = await Post.findOneAndDelete({ postedBy: userId, retweetData: postId}) // find post contain userId and in retweetData contain this post id.
+    .catch(error => {
+        console.log(error);
+        return res.sendStatus(400);
+    })
+        
+    // if not null it means it found post - we have to delete it from User side also other wise we to add it.
+    var option = deletedPost !=null ? "$pull" : "$addToSet";
+
+    var repost = deletedPost;
+
+    if(repost == null){
+        // we are not putting some fields example content field because retweet content is empty.
+        repost = await Post.create({ postedBy: userId, repostData: postId })
+        .catch(error => {
+            console.log(error);
+            return res.sendStatus(400);
+        });
+        
+        
+
+    }
+
+    // Insert retweeted post                               // either add it or remove it.
+    req.session.user = await User.findByIdAndUpdate(userId, { [option]: { retweets: repost._id }}, {new: true})
+    .catch(error => {
+        console.log(error);
+        return res.sendStatus(400);
+    })
+                                                                                           
+
+    
+    
+    // Insert user which retweet in post
+    var post = await Post.findByIdAndUpdate(postId, { [option]: { retweetUsers: userId }}, {new: true})
+    .catch(error => {
+        console.log(error);
+        return res.sendStatus(400);
+    })
+    
+    res.status(200).send(post);
+})
 module.exports = router;
