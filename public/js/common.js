@@ -52,7 +52,6 @@ $('#submitPostButton, #submitReplyButton').click((event)=>{
 
                 // show bootstrap modal
 $("#replyModal").on("show.bs.modal", (event)=>{
-
     var button = $(event.relatedTarget);
     var postId = getPostIdFromElement(button);
     $("#submitReplyButton").data("id", postId);           //setting the data-id = postId
@@ -64,6 +63,30 @@ $("#replyModal").on("show.bs.modal", (event)=>{
 });
 
 $("#replyModal").on("hidden.bs.modal", () => $("#originalPostContainer").html(""));
+
+$("#deletePostModal").on("show.bs.modal", (event)=>{
+    var button = $(event.relatedTarget);
+    var postId = getPostIdFromElement(button);
+    $("#deletePostButton").data("id", postId);
+});
+
+$("#deletePostButton").click((event) => {
+    var postId = $(event.target).data("id");
+
+    $.ajax({
+        url: `/api/posts/${postId}`,
+        type: "DELETE",
+        success: (data, status, xhr)=>{
+            if(xhr.status != 202){
+                alert("could not delete");
+                return;
+            }
+            location.reload();
+        }
+    })
+
+
+})
 
 // Like click
 $(document).on("click",".likeButton", (event) => {
