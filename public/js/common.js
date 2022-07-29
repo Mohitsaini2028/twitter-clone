@@ -17,20 +17,35 @@ $('#PostTextarea, #replyTextarea').keyup((event)=> {
     submitButton.prop("disabled", false);
 });
 
-$('#submitPostButton').click((event)=>{
+$('#submitPostButton, #submitReplyButton').click((event)=>{
     var button = $(event.target);
-    var textbox = $('#PostTextarea');
+    
+    var isModal = button.parents(".modal").length == 1;
+
+    var textbox = isModal ? $("#replyTextarea") : $('#PostTextarea');
     
     var data = {
         content: textbox.val()
     }
+    
+    if(isModal){
+        var id = button.data().id;
+        if(id == null) return alert("button id is null");
+        data.replyTo = id;
+    }
 
     $.post("/api/posts", data, (postData, status, xhr)=>{
         
-        var html = createPostHtml(postData);
-        $('.postsContainer').prepend(html);
-        textbox.val("");
-        button.prop("disabled", true);
+        if(postData.replyTo){
+            location.reload();
+        }
+        else{
+            var html = createPostHtml(postData);
+            $('.postsContainer').prepend(html);
+            textbox.val("");
+            button.prop("disabled", true);
+        }
+
         
     })
 });
@@ -40,11 +55,15 @@ $("#replyModal").on("show.bs.modal", (event)=>{
 
     var button = $(event.relatedTarget);
     var postId = getPostIdFromElement(button);
+    $("#submitReplyButton").data("id", postId);           //setting the data-id = postId
+    // data method 
 
     $.get('/api/posts/' + postId, (results)=>{  
         outputPosts(results, $("#originalPostContainer")); 
     });
 });
+
+$("#replyModal").on("hidden.bs.modal", () => $("#originalPostContainer").html(""));
 
 // Like click
 $(document).on("click",".likeButton", (event) => {
@@ -153,12 +172,28 @@ function createPostHtml(postData){
     var likedButtonActiveCLass = postData.likes.includes(userLoggedIn._id) ? "active" : ""; 
     var retweetButtonActiveCLass = postData.retweetUsers.includes(userLoggedIn._id) ? "active" : ""; 
 
-    var retweetText = '';
+    var retweetText = "";
     if(isRetweet){
         retweetText = `<span>
             <i class="fa-solid fa-retweet"></i>
             Retweeted by <a href='/profile/${retweetedBy}'>@${retweetedBy}</a>
-            </span>`
+            </span>`;
+    }
+
+    var replyFlag = "";
+    if(postData.replyTo){
+
+        if(!postData.replyTo._id){
+            console.log("Reply to is not populated");
+        }
+        else if(!postData.replyTo.postedBy._id){
+            console.log("Posted By to is not populated");
+        }
+
+        var replyToUsername = postData.replyTo.postedBy.username;
+        replyFlag = `<div class='replyFlag'>
+                        Replying to <a href='/profile/${replyToUsername}'>@${replyToUsername}</a>
+                 </div>`;
     }
 
     if(postedBy.isVerified){
@@ -179,6 +214,7 @@ function createPostHtml(postData){
                             <span class="username">${postedBy.username}</span>
                             <span class="date">${timestamp}</span>
                         </div>
+                        ${replyFlag}
                         <div class="postBody">
                         <span>${postData.content}</span>
                         </div>
