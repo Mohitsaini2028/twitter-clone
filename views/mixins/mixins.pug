@@ -43,7 +43,7 @@ mixin createDeletePostModal()
                     p You won't be able to delete this.
                 .modal-footer
                     button.btn.btn-secondary(type='button', data-dismiss='modal') Close
-                    button#deletePostButton.btn.btn-primary(type='button') Delete
+                    button#deletePostButton.btn.btn-danger(type='button') Delete
 
 mixin createPostModal(userLoggedIn)
     +createReplyModal(userLoggedIn)

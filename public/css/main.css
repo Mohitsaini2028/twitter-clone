@@ -279,3 +279,29 @@ button span{
 .postContentContainer .header .date{
     flex: 1;
 }
+
+.errorMessage{
+    padding: var(--spacing);
+}
+
+.coverPhotoContainer{
+    height: 180px;
+    background-color: var(--blue);
+    position: relative;
+}
+
+.profileHeaderContainer .userImageContainer{
+    height: 132px;
+    width: 132px;
+    margin-left: var(--spacing);
+    position: absolute;
+    bottom: -66px;
+}
+
+.profileHeaderContainer .userImageContainer img{
+    border: 4px solid #fff;
+}
+
+/* .profileHeaderContainer{
+    
+} */
