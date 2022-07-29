@@ -9,6 +9,10 @@ block content
 
                 .userImageContainer
                     img(src=profileUser.profilePic, alt="User profile image")
+            .profileButtonsContainer
+                if profileUser._id != userLoggedIn._id
+                    a.profileButton(href=`/messages/${profileUser._id}`)
+                        i.fa-solid.fa-envelope
         //- .postsContainer
         
         //- +createPostModal(userLoggedIn)

@@ -39,7 +39,7 @@ async function getPayload(username, userLoggedIn){
     }
 
     return {
-        pageTitle: "User not found",
+        pageTitle: user.username,
         userLoggedIn: userLoggedIn,
         userLoggedInJs: JSON.stringify(userLoggedIn),
         profileUser: user
