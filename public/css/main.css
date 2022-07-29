@@ -109,6 +109,11 @@ button span{
     padding-top: var(--spacing);
 }
 
+.modal .post{
+    padding: 0;
+    padding-bottom: var(--spacing);
+}
+
 .userImageContainer{
     width: 50px;
     height: 50px;

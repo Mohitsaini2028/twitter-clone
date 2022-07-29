@@ -19,6 +19,7 @@ mixin createReplyModal(userLoggedIn)
                     button.close(type='button', data-dismiss='modal', aria-label='Close')
                     span(aria-hidden='true') &times;
                 .modal-body
+                        #originalPostContainer
                         .postFormContainer
                             .userImageContainer
                                 img(src=userLoggedIn.profilePic, alt="User's profile picture")

@@ -37,12 +37,12 @@ $('#submitPostButton').click((event)=>{
 
                 // show bootstrap modal
 $("#replyModal").on("show.bs.modal", (event)=>{
-    console.log("hi");
+
     var button = $(event.relatedTarget);
     var postId = getPostIdFromElement(button);
 
-    $.get(`/api/posts/${postId}`, (results)=>{    
-        console.log(results); 
+    $.get('/api/posts/' + postId, (results)=>{  
+        outputPosts(results, $("#originalPostContainer")); 
     });
 });
 
@@ -246,4 +246,23 @@ function timeDifference(current, previous) {
     else {
         return Math.round(elapsed/msPerYear ) + ' years ago';   
     }
+}
+
+function outputPosts(results, container){
+    container.html("");
+
+    // if not array
+    if(!Array.isArray(results)){
+        results = [results];
+    }
+
+    results.forEach(result => {                        // displaying tweets 
+        var html = createPostHtml(result);          
+        container.append(html);
+    });
+
+    if(results.length == 0){
+        container.append("<span class='noResults'>Nothing to show.</span>");
+    }
+
 }
