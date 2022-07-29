@@ -93,7 +93,6 @@ $(document).on("click",".likeButton", (event) => {
 
 });
 
-
 // Retweet click
 $(document).on("click",".retweetButton", (event) => {
     var button = $(event.target);
@@ -122,7 +121,17 @@ $(document).on("click",".retweetButton", (event) => {
 
 });
 
+// Post click
+$(document).on("click",".post", (event) => {
+    var element = $(event.target);
+    var postId = getPostIdFromElement(element);
 
+    if(postId !== undefined && !element.is("button")){
+        window.location.href = '/posts/' + postId;
+    }
+
+
+});
 
 function getPostIdFromElement(element){
     var isRoot = element.hasClass("post");  // it means it is the root element
