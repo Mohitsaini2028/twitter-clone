@@ -9,8 +9,10 @@ router.get("/", (req, res, next)=>{
 
     Post.find()
     .populate("postedBy")
+    .populate("retweetData")
     .sort({"createdAt": -1})
-    .then((results)=>{
+    .then(async (results)=>{
+        results =  await User.populate(results, {path: "retweetData.postedBy"});
         res.status(200).send(results);
     })
     .catch(error => {
