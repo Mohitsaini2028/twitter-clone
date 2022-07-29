@@ -1,8 +1,11 @@
-$('#PostTextarea').keyup((event)=> {
+$('#PostTextarea, #replyTextarea').keyup((event)=> {
     var textbox = $(event.target);
     var value = textbox.val().trim();
+
+    var isModal = textbox.parents(".modal").length == 1;
+
     
-    var submitButton = $('#submitPostButton');
+    var submitButton = isModal ? $('#submitReplyButton') : $('#submitPostButton');
 
     if(submitButton.length == 0) return alert("d");
     
@@ -30,6 +33,17 @@ $('#submitPostButton').click((event)=>{
         button.prop("disabled", true);
         
     })
+});
+
+                // show bootstrap modal
+$("#replyModal").on("show.bs.modal", (event)=>{
+    console.log("hi");
+    var button = $(event.relatedTarget);
+    var postId = getPostIdFromElement(button);
+
+    $.get(`/api/posts/${postId}`, (results)=>{    
+        console.log(results); 
+    });
 });
 
 // Like click
@@ -170,7 +184,7 @@ function createPostHtml(postData){
                         </div>
                         <div class="postFooter">
                             <div class="postButtonContainer">
-                                <button>
+                                <button data-toggle="modal" data-target="#replyModal">
                                     <i class="fa-regular fa-comment"></i>
                                 </button>
                             </div>
