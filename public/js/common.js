@@ -73,18 +73,16 @@ $(document).on("click",".retweetButton", (event) => {
         type: "POST",
         success: (postData)=>{
 
-            console.log(postData);
-
-            // button.find("span").text(postData.likes.length || ""); // next span element you find
+            button.find("span").text(postData.retweetUsers.length || ""); // next span element you find
             
-            // if(postData.likes.includes(userLoggedIn._id)){
-            //     button.addClass("active");
-            // }
-            // else{
-            //     button.removeClass("active");
-            // }
+            if(postData.retweetUsers.includes(userLoggedIn._id)){
+                button.addClass("active");
+            }
+            else{
+                button.removeClass("active");
+            }
 
-            // return postData;
+            return postData;
         }
     })
     console.log(postId);
@@ -105,21 +103,21 @@ function getPostIdFromElement(element){
 
 function createPostHtml(postData){
 
-    if(postData.content === undefined){
-        console.log("postData has no content")
-        return;
-    }
-
-    arr = postData.content.split(" ");
-
-    for (index = 0; index < arr.length; index++) {
-        if(arr[index].startsWith('#')){
-            arr[index]= `<span class='link'>${arr[index]}</span>`;
-        }
+    if(postData.content !== undefined){
         
+        // retweet case
+        arr = postData.content.split(" ");
+
+        for (index = 0; index < arr.length; index++) {
+            if(arr[index].startsWith('#')){
+                arr[index]= `<span class='link'>${arr[index]}</span>`;
+            }          
+        }
+
+        postData.content = arr.join(' ');
     }
 
-    postData.content = arr.join(' ');
+    
 
     var postedBy = postData.postedBy;
 
@@ -160,6 +158,7 @@ function createPostHtml(postData){
                             <div class="postButtonContainer green">
                                 <button class="retweetButton">
                                 <i class="fa-solid fa-retweet"></i>
+                                <span>${postData.retweetUsers.length || ""}</span>
                                 </button>
                             </div>
                             <div class="postButtonContainer red">

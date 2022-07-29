@@ -111,7 +111,7 @@ router.post("/:id/retweet", async (req, res, next)=>{
 
     if(repost == null){
         // we are not putting some fields example content field because retweet content is empty.
-        repost = await Post.create({ postedBy: userId, repostData: postId })
+        repost = await Post.create({ postedBy: userId, retweetData: postId })
         .catch(error => {
             console.log(error);
             return res.sendStatus(400);
