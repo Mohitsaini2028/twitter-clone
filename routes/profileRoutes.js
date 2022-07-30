@@ -22,6 +22,25 @@ router.get("/", (req, res, next)=>{
     res.status(200).render("profilePage", payload);
 })
 
+
+router.get("/:username", async (req, res, next)=>{
+    
+    var username = req.params.username;
+    var userLoggedIn = req.session.user;
+    console.log(username, userLoggedIn)
+    var payload = await getPayload(username, userLoggedIn);
+    
+    res.status(200).render("profilePage", payload);
+})
+
+router.get("/:username/replies", async (req, res, next)=>{
+
+    var payload = await getPayload(req.params.username, req.session.user);
+    payload.selectedTab = "replies";
+    console.log(payload);
+    res.status(200).render("profilePage", payload);
+})
+
 async function getPayload(username, userLoggedIn){
     var user = await User.findOne({username: username})
     
@@ -46,24 +65,6 @@ async function getPayload(username, userLoggedIn){
     }
 
 }
-
-router.get("/:username", async (req, res, next)=>{
-
-    var username = req.params.username;
-    var userLoggedIn = req.session.user;
-    console.log(username, userLoggedIn)
-    var payload = await getPayload(username, userLoggedIn);
-
-    // var payload = {
-    //     pageTitle: "User not found",
-    //     userLoggedIn: userLoggedIn,
-    //     userLoggedInJs: JSON.stringify(userLoggedIn),
-    //     profileUser: user
-    // }
-
-    console.log(payload);
-    res.status(200).render("profilePage", payload);
-})
 
 
 

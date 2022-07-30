@@ -311,7 +311,8 @@ button span{
     min-height: 66px;
 }
 
-.profileButton{
+.profileButton,
+.followButton{
     border: 1px solid var(--blue);
     font-weight: bold;
     color: var(--blue);
@@ -322,7 +323,69 @@ button span{
     margin-left: var(--spacing);
 }
 
-.profileButton:hover{
+.profileButton:hover,
+.followButton:hover{
     background-color: var(--blueBackground);
+    color: var(--blue);
+    
+}
 
+.followButton.following{
+    background-color: var(--blue);
+    color: #fff;
+
+}
+
+.followButton.following:hover{
+    background-color: var(--blueBackground);
+    color: var(--blue);
+}
+
+.userHeaderContainer .userDetailsContainer{
+    display: flex;
+    flex-direction: column;
+    padding: 0 var(--spacing);
+}
+
+.followersContainer .value {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.followersContainer span:not(.value){
+    color: var(--greyText);
+}
+
+.followersContainer a {
+    margin-right: 15px;
+}
+
+.followersContainer a:hover{
+    border-bottom: 1px solid #000;
+}
+
+.tabsContainer {
+    display: flex;
+    border-bottom: 1px solid var(--lightGrey);
+    flex-shrink: 0;
+}
+
+.tab {
+    flex: 1;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--greyText);
+    font-weight: bold;
+}
+
+.tab.active{
+    color: var(--b);
+    border-bottom: 2px solid var(--blue);
+}
+
+.tab:hover{
+    color: var(--blue);
+    background-color: var(--blueBackground);
 }
